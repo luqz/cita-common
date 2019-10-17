@@ -45,8 +45,7 @@ impl TryFromProto<ProtoProof> for BftProof {
     fn try_from_proto(p: ProtoProof) -> Result<Self, Self::Error> {
         use crate::proof_srv::BftProof as SrvBftProof;
 
-        let decoded: SrvBftProof = deserialize(&p.get_content()[..]) //
-            .map_err(Error::bft_proof_decode_error)?;
+        let decoded: SrvBftProof = rlp::decode(p.get_content());
         let mut commits: HashMap<Address, String> = HashMap::new();
         let str_0x = "0x".to_string();
 

@@ -14,9 +14,10 @@ cita-directories = { path = "../cita-directories" }
 serde = "1.0"
 serde_derive = "1.0"
 bincode = "0.8.0"
+rlp = { path = "../rlp" }
 
 [features]
-default = []
+default = ["secp256k1","sha3hash"]
 secp256k1 = ["cita-crypto/secp256k1", "libproto/secp256k1"]
 ed25519 = ["cita-crypto/ed25519", "libproto/ed25519"]
 sm2 = ["cita-crypto/sm2", "libproto/sm2"]
