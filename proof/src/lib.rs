@@ -23,7 +23,7 @@ extern crate cita_directories;
 
 mod bft_proof;
 
-pub use bft_proof::{BftProof, Step};
+pub use bft_proof::{BftProof, BftProposalMsg, Step};
 use libproto::blockchain::{Proof, ProofType};
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]

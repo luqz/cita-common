@@ -194,19 +194,39 @@ impl SignedTransaction {
     }
 }
 
+impl ProofType {
+    fn value_u8(&self) -> u8 {
+        *self as u8
+    }
+
+    fn from_u8(value: u8) -> Option<ProofType> {
+        match value {
+            0 => Some(ProofType::AuthorityRound),
+            1 => Some(ProofType::Raft),
+            2 => Some(ProofType::Bft),
+            _ => None,
+        }
+    }
+}
+
 impl Eq for Proof {}
 
 impl Decodable for Proof {
     fn decode(rlp: &UntrustedRlp) -> Result<Self, DecoderError> {
-        rlp.decoder()
-            .decode_value(|bytes| Ok(Proof::try_from(bytes).unwrap()))
+        let mut proof = Proof::new();
+        proof.set_content(rlp.val_at(0)?);
+        proof.set_field_type(
+            ProofType::from_u8(rlp.val_at(1)?).ok_or(DecoderError::Custom("unknown proof type"))?,
+        );
+        Ok(proof)
     }
 }
 
 impl Encodable for Proof {
     fn rlp_append(&self, s: &mut RlpStream) {
-        let b: Vec<u8> = self.try_into().unwrap();
-        s.encoder().encode_value(&b);
+        s.begin_list(2);
+        s.append(&self.content);
+        s.append(&self.field_type.value_u8());
     }
 }
 
@@ -328,13 +348,33 @@ impl CompactSignedProposal {
 
 impl BlockHeader {
     pub fn crypt_hash(&self) -> H256 {
-        let bytes: Vec<u8> = self.try_into().unwrap();
+        let bytes: Vec<u8> = self.rlp();
         bytes.crypt_hash()
     }
 
     pub fn crypt_hash_hex(&self) -> String {
-        let bytes: Vec<u8> = self.try_into().unwrap();
+        let bytes: Vec<u8> = self.rlp();
         bytes.crypt_hash().to_hex()
+    }
+
+    pub fn stream_rlp(&self, s: &mut RlpStream) {
+        s.begin_list(10);
+        s.append(&self.get_prevhash());
+        s.append(&self.get_state_root());
+        s.append(&self.get_transactions_root());
+        s.append(&self.get_receipts_root());
+        s.append(&self.get_height());
+        s.append(&self.get_quota_limit());
+        s.append(&self.get_quota_used());
+        s.append(&self.get_timestamp());
+        s.append(self.get_proof());
+        s.append(&self.get_proposer());
+    }
+
+    pub fn rlp(&self) -> Vec<u8> {
+        let mut s = RlpStream::new();
+        self.stream_rlp(&mut s);
+        s.out()
     }
 }
 
