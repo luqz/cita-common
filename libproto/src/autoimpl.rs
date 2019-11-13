@@ -148,6 +148,10 @@ macro_rules! loop_macro_for_structs {
     ($macro:ident) => {
         $macro!(
             // Generate ALL-PROTOS automatically begin:
+            BalanceVerifyReq,
+            BalanceVerifyRes,
+            BalanceVerifyResult,
+            BalanceVerifyTransaction,
             BlockTxHashes,
             BlockTxHashesReq,
             Miscellaneous,
@@ -234,6 +238,8 @@ macro_rules! loop_macro_for_structs_in_msg {
             GetBlockTxn,
             BlockTxn,
             CompactSignedProposal,
+            BalanceVerifyReq,
+            BalanceVerifyRes,
             // Generate MSG-PROTOS struct automatically end.
         );
     };
@@ -527,6 +533,18 @@ impl Message {
     pub fn take_compact_signed_proposal(&mut self) -> Option<CompactSignedProposal> {
         match self.take_content() {
             Some(MsgClass::CompactSignedProposal(v)) => Some(v),
+            _ => None,
+        }
+    }
+    pub fn take_balance_verify_req(&mut self) -> Option<BalanceVerifyReq> {
+        match self.take_content() {
+            Some(MsgClass::BalanceVerifyReq(v)) => Some(v),
+            _ => None,
+        }
+    }
+    pub fn take_balance_verify_res(&mut self) -> Option<BalanceVerifyRes> {
+        match self.take_content() {
+            Some(MsgClass::BalanceVerifyRes(v)) => Some(v),
             _ => None,
         }
     }

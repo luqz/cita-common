@@ -17,7 +17,7 @@
 
 // https://github.com/Manishearth/rust-clippy/issues/702
 #![allow(unknown_lints)]
-#![allow(clippy::all)]
+#![allow(clippy)]
 
 #![cfg_attr(rustfmt, rustfmt_skip)]
 
@@ -1992,6 +1992,856 @@ impl ::protobuf::reflect::ProtobufValue for MiscellaneousReq {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+pub struct BalanceVerifyTransaction {
+    // message fields
+    pub request_id: ::std::vec::Vec<u8>,
+    pub is_local: bool,
+    pub sender: ::std::vec::Vec<u8>,
+    pub signed_tx: ::protobuf::SingularPtrField<super::blockchain::SignedTransaction>,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl BalanceVerifyTransaction {
+    pub fn new() -> BalanceVerifyTransaction {
+        ::std::default::Default::default()
+    }
+
+    // bytes request_id = 1;
+
+    pub fn clear_request_id(&mut self) {
+        self.request_id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_request_id(&mut self, v: ::std::vec::Vec<u8>) {
+        self.request_id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_request_id(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.request_id
+    }
+
+    // Take field
+    pub fn take_request_id(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.request_id, ::std::vec::Vec::new())
+    }
+
+    pub fn get_request_id(&self) -> &[u8] {
+        &self.request_id
+    }
+
+    // bool is_local = 2;
+
+    pub fn clear_is_local(&mut self) {
+        self.is_local = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_is_local(&mut self, v: bool) {
+        self.is_local = v;
+    }
+
+    pub fn get_is_local(&self) -> bool {
+        self.is_local
+    }
+
+    // bytes sender = 3;
+
+    pub fn clear_sender(&mut self) {
+        self.sender.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_sender(&mut self, v: ::std::vec::Vec<u8>) {
+        self.sender = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_sender(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.sender
+    }
+
+    // Take field
+    pub fn take_sender(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.sender, ::std::vec::Vec::new())
+    }
+
+    pub fn get_sender(&self) -> &[u8] {
+        &self.sender
+    }
+
+    // .SignedTransaction signed_tx = 4;
+
+    pub fn clear_signed_tx(&mut self) {
+        self.signed_tx.clear();
+    }
+
+    pub fn has_signed_tx(&self) -> bool {
+        self.signed_tx.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_signed_tx(&mut self, v: super::blockchain::SignedTransaction) {
+        self.signed_tx = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_signed_tx(&mut self) -> &mut super::blockchain::SignedTransaction {
+        if self.signed_tx.is_none() {
+            self.signed_tx.set_default();
+        }
+        self.signed_tx.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_signed_tx(&mut self) -> super::blockchain::SignedTransaction {
+        self.signed_tx.take().unwrap_or_else(|| super::blockchain::SignedTransaction::new())
+    }
+
+    pub fn get_signed_tx(&self) -> &super::blockchain::SignedTransaction {
+        self.signed_tx.as_ref().unwrap_or_else(|| super::blockchain::SignedTransaction::default_instance())
+    }
+}
+
+impl ::protobuf::Message for BalanceVerifyTransaction {
+    fn is_initialized(&self) -> bool {
+        for v in &self.signed_tx {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.request_id)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.is_local = tmp;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.sender)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.signed_tx)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.request_id.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(1, &self.request_id);
+        }
+        if self.is_local != false {
+            my_size += 2;
+        }
+        if !self.sender.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(3, &self.sender);
+        }
+        if let Some(ref v) = self.signed_tx.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if !self.request_id.is_empty() {
+            os.write_bytes(1, &self.request_id)?;
+        }
+        if self.is_local != false {
+            os.write_bool(2, self.is_local)?;
+        }
+        if !self.sender.is_empty() {
+            os.write_bytes(3, &self.sender)?;
+        }
+        if let Some(ref v) = self.signed_tx.as_ref() {
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> BalanceVerifyTransaction {
+        BalanceVerifyTransaction::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                    "request_id",
+                    |m: &BalanceVerifyTransaction| { &m.request_id },
+                    |m: &mut BalanceVerifyTransaction| { &mut m.request_id },
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                    "is_local",
+                    |m: &BalanceVerifyTransaction| { &m.is_local },
+                    |m: &mut BalanceVerifyTransaction| { &mut m.is_local },
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                    "sender",
+                    |m: &BalanceVerifyTransaction| { &m.sender },
+                    |m: &mut BalanceVerifyTransaction| { &mut m.sender },
+                ));
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::blockchain::SignedTransaction>>(
+                    "signed_tx",
+                    |m: &BalanceVerifyTransaction| { &m.signed_tx },
+                    |m: &mut BalanceVerifyTransaction| { &mut m.signed_tx },
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<BalanceVerifyTransaction>(
+                    "BalanceVerifyTransaction",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+
+    fn default_instance() -> &'static BalanceVerifyTransaction {
+        static mut instance: ::protobuf::lazy::Lazy<BalanceVerifyTransaction> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const BalanceVerifyTransaction,
+        };
+        unsafe {
+            instance.get(BalanceVerifyTransaction::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for BalanceVerifyTransaction {
+    fn clear(&mut self) {
+        self.clear_request_id();
+        self.clear_is_local();
+        self.clear_sender();
+        self.clear_signed_tx();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for BalanceVerifyTransaction {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for BalanceVerifyTransaction {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct BalanceVerifyReq {
+    // message fields
+    pub bv_txs: ::protobuf::RepeatedField<BalanceVerifyTransaction>,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl BalanceVerifyReq {
+    pub fn new() -> BalanceVerifyReq {
+        ::std::default::Default::default()
+    }
+
+    // repeated .BalanceVerifyTransaction bv_txs = 1;
+
+    pub fn clear_bv_txs(&mut self) {
+        self.bv_txs.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_bv_txs(&mut self, v: ::protobuf::RepeatedField<BalanceVerifyTransaction>) {
+        self.bv_txs = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_bv_txs(&mut self) -> &mut ::protobuf::RepeatedField<BalanceVerifyTransaction> {
+        &mut self.bv_txs
+    }
+
+    // Take field
+    pub fn take_bv_txs(&mut self) -> ::protobuf::RepeatedField<BalanceVerifyTransaction> {
+        ::std::mem::replace(&mut self.bv_txs, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_bv_txs(&self) -> &[BalanceVerifyTransaction] {
+        &self.bv_txs
+    }
+}
+
+impl ::protobuf::Message for BalanceVerifyReq {
+    fn is_initialized(&self) -> bool {
+        for v in &self.bv_txs {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.bv_txs)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.bv_txs {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.bv_txs {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> BalanceVerifyReq {
+        BalanceVerifyReq::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<BalanceVerifyTransaction>>(
+                    "bv_txs",
+                    |m: &BalanceVerifyReq| { &m.bv_txs },
+                    |m: &mut BalanceVerifyReq| { &mut m.bv_txs },
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<BalanceVerifyReq>(
+                    "BalanceVerifyReq",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+
+    fn default_instance() -> &'static BalanceVerifyReq {
+        static mut instance: ::protobuf::lazy::Lazy<BalanceVerifyReq> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const BalanceVerifyReq,
+        };
+        unsafe {
+            instance.get(BalanceVerifyReq::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for BalanceVerifyReq {
+    fn clear(&mut self) {
+        self.clear_bv_txs();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for BalanceVerifyReq {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for BalanceVerifyReq {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct BalanceVerifyResult {
+    // message fields
+    pub bv_tx: ::protobuf::SingularPtrField<BalanceVerifyTransaction>,
+    pub passed: bool,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl BalanceVerifyResult {
+    pub fn new() -> BalanceVerifyResult {
+        ::std::default::Default::default()
+    }
+
+    // .BalanceVerifyTransaction bv_tx = 1;
+
+    pub fn clear_bv_tx(&mut self) {
+        self.bv_tx.clear();
+    }
+
+    pub fn has_bv_tx(&self) -> bool {
+        self.bv_tx.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_bv_tx(&mut self, v: BalanceVerifyTransaction) {
+        self.bv_tx = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_bv_tx(&mut self) -> &mut BalanceVerifyTransaction {
+        if self.bv_tx.is_none() {
+            self.bv_tx.set_default();
+        }
+        self.bv_tx.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_bv_tx(&mut self) -> BalanceVerifyTransaction {
+        self.bv_tx.take().unwrap_or_else(|| BalanceVerifyTransaction::new())
+    }
+
+    pub fn get_bv_tx(&self) -> &BalanceVerifyTransaction {
+        self.bv_tx.as_ref().unwrap_or_else(|| BalanceVerifyTransaction::default_instance())
+    }
+
+    // bool passed = 2;
+
+    pub fn clear_passed(&mut self) {
+        self.passed = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_passed(&mut self, v: bool) {
+        self.passed = v;
+    }
+
+    pub fn get_passed(&self) -> bool {
+        self.passed
+    }
+}
+
+impl ::protobuf::Message for BalanceVerifyResult {
+    fn is_initialized(&self) -> bool {
+        for v in &self.bv_tx {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.bv_tx)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.passed = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.bv_tx.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.passed != false {
+            my_size += 2;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.bv_tx.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.passed != false {
+            os.write_bool(2, self.passed)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> BalanceVerifyResult {
+        BalanceVerifyResult::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<BalanceVerifyTransaction>>(
+                    "bv_tx",
+                    |m: &BalanceVerifyResult| { &m.bv_tx },
+                    |m: &mut BalanceVerifyResult| { &mut m.bv_tx },
+                ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                    "passed",
+                    |m: &BalanceVerifyResult| { &m.passed },
+                    |m: &mut BalanceVerifyResult| { &mut m.passed },
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<BalanceVerifyResult>(
+                    "BalanceVerifyResult",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+
+    fn default_instance() -> &'static BalanceVerifyResult {
+        static mut instance: ::protobuf::lazy::Lazy<BalanceVerifyResult> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const BalanceVerifyResult,
+        };
+        unsafe {
+            instance.get(BalanceVerifyResult::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for BalanceVerifyResult {
+    fn clear(&mut self) {
+        self.clear_bv_tx();
+        self.clear_passed();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for BalanceVerifyResult {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for BalanceVerifyResult {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct BalanceVerifyRes {
+    // message fields
+    pub bv_results: ::protobuf::RepeatedField<BalanceVerifyResult>,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+impl BalanceVerifyRes {
+    pub fn new() -> BalanceVerifyRes {
+        ::std::default::Default::default()
+    }
+
+    // repeated .BalanceVerifyResult bv_results = 1;
+
+    pub fn clear_bv_results(&mut self) {
+        self.bv_results.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_bv_results(&mut self, v: ::protobuf::RepeatedField<BalanceVerifyResult>) {
+        self.bv_results = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_bv_results(&mut self) -> &mut ::protobuf::RepeatedField<BalanceVerifyResult> {
+        &mut self.bv_results
+    }
+
+    // Take field
+    pub fn take_bv_results(&mut self) -> ::protobuf::RepeatedField<BalanceVerifyResult> {
+        ::std::mem::replace(&mut self.bv_results, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_bv_results(&self) -> &[BalanceVerifyResult] {
+        &self.bv_results
+    }
+}
+
+impl ::protobuf::Message for BalanceVerifyRes {
+    fn is_initialized(&self) -> bool {
+        for v in &self.bv_results {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.bv_results)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.bv_results {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.bv_results {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> BalanceVerifyRes {
+        BalanceVerifyRes::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<BalanceVerifyResult>>(
+                    "bv_results",
+                    |m: &BalanceVerifyRes| { &m.bv_results },
+                    |m: &mut BalanceVerifyRes| { &mut m.bv_results },
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<BalanceVerifyRes>(
+                    "BalanceVerifyRes",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+
+    fn default_instance() -> &'static BalanceVerifyRes {
+        static mut instance: ::protobuf::lazy::Lazy<BalanceVerifyRes> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const BalanceVerifyRes,
+        };
+        unsafe {
+            instance.get(BalanceVerifyRes::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for BalanceVerifyRes {
+    fn clear(&mut self) {
+        self.clear_bv_results();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for BalanceVerifyRes {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for BalanceVerifyRes {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\nauth.proto\x1a\x10blockchain.proto\"\xba\x02\n\x0bVerifyTxReq\x12*\n\
     \x11valid_until_block\x18\x01\x20\x01(\x04R\x0fvalidUntilBlock\x12\x12\n\
@@ -2018,9 +2868,18 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     esReq\x12\x16\n\x06height\x18\x01\x20\x01(\x04R\x06height\"J\n\rMiscella\
     neous\x12\x19\n\x08chain_id\x18\x01\x20\x01(\rR\x07chainId\x12\x1e\n\x0b\
     chain_id_v1\x18\x02\x20\x01(\x0cR\tchainIdV1\"\x12\n\x10MiscellaneousReq\
-    J\x8f\x11\n\x06\x12\x04\0\03\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\t\n\
-    \x02\x03\0\x12\x03\x02\x07\x19\n\n\n\x02\x04\0\x12\x04\x04\0\x10\x01\n\n\
-    \n\x03\x04\0\x01\x12\x03\x04\x08\x13\n\x0b\n\x04\x04\0\x02\0\x12\x03\x05\
+    \"\x9d\x01\n\x18BalanceVerifyTransaction\x12\x1d\n\nrequest_id\x18\x01\
+    \x20\x01(\x0cR\trequestId\x12\x19\n\x08is_local\x18\x02\x20\x01(\x08R\
+    \x07isLocal\x12\x16\n\x06sender\x18\x03\x20\x01(\x0cR\x06sender\x12/\n\t\
+    signed_tx\x18\x04\x20\x01(\x0b2\x12.SignedTransactionR\x08signedTx\"D\n\
+    \x10BalanceVerifyReq\x120\n\x06bv_txs\x18\x01\x20\x03(\x0b2\x19.BalanceV\
+    erifyTransactionR\x05bvTxs\"]\n\x13BalanceVerifyResult\x12.\n\x05bv_tx\
+    \x18\x01\x20\x01(\x0b2\x19.BalanceVerifyTransactionR\x04bvTx\x12\x16\n\
+    \x06passed\x18\x02\x20\x01(\x08R\x06passed\"G\n\x10BalanceVerifyRes\x123\
+    \n\nbv_results\x18\x01\x20\x03(\x0b2\x14.BalanceVerifyResultR\tbvResults\
+    J\x9d\x16\n\x06\x12\x04\0\0G\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\t\n\
+    \x02\x03\0\x12\x03\x02\0\x1a\n\n\n\x02\x04\0\x12\x04\x04\0\x10\x01\n\n\n\
+    \x03\x04\0\x01\x12\x03\x04\x08\x13\n\x0b\n\x04\x04\0\x02\0\x12\x03\x05\
     \x04!\n\r\n\x05\x04\0\x02\0\x04\x12\x04\x05\x04\x04\x15\n\x0c\n\x05\x04\
     \0\x02\0\x05\x12\x03\x05\x04\n\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03\x05\
     \x0b\x1c\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x05\x1f\x20\n\x0b\n\x04\x04\
@@ -2122,8 +2981,37 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x12\x03/\x04\x1a\n\r\n\x05\x04\x05\x02\x01\x04\x12\x04/\x04.\x18\n\x0c\
     \n\x05\x04\x05\x02\x01\x05\x12\x03/\x04\t\n\x0c\n\x05\x04\x05\x02\x01\
     \x01\x12\x03/\n\x15\n\x0c\n\x05\x04\x05\x02\x01\x03\x12\x03/\x18\x19\n\n\
-    \n\x02\x04\x06\x12\x042\03\x01\n\n\n\x03\x04\x06\x01\x12\x032\x08\x18b\
-    \x06proto3\
+    \n\x02\x04\x06\x12\x042\03\x01\n\n\n\x03\x04\x06\x01\x12\x032\x08\x18\n\
+    \n\n\x02\x04\x07\x12\x045\0:\x01\n\n\n\x03\x04\x07\x01\x12\x035\x08\x20\
+    \n\x0b\n\x04\x04\x07\x02\0\x12\x036\x02\x17\n\r\n\x05\x04\x07\x02\0\x04\
+    \x12\x046\x025\"\n\x0c\n\x05\x04\x07\x02\0\x05\x12\x036\x02\x07\n\x0c\n\
+    \x05\x04\x07\x02\0\x01\x12\x036\x08\x12\n\x0c\n\x05\x04\x07\x02\0\x03\
+    \x12\x036\x15\x16\n\x0b\n\x04\x04\x07\x02\x01\x12\x037\x02\x14\n\r\n\x05\
+    \x04\x07\x02\x01\x04\x12\x047\x026\x17\n\x0c\n\x05\x04\x07\x02\x01\x05\
+    \x12\x037\x02\x06\n\x0c\n\x05\x04\x07\x02\x01\x01\x12\x037\x07\x0f\n\x0c\
+    \n\x05\x04\x07\x02\x01\x03\x12\x037\x12\x13\n\x0b\n\x04\x04\x07\x02\x02\
+    \x12\x038\x02\x13\n\r\n\x05\x04\x07\x02\x02\x04\x12\x048\x027\x14\n\x0c\
+    \n\x05\x04\x07\x02\x02\x05\x12\x038\x02\x07\n\x0c\n\x05\x04\x07\x02\x02\
+    \x01\x12\x038\x08\x0e\n\x0c\n\x05\x04\x07\x02\x02\x03\x12\x038\x11\x12\n\
+    \x0b\n\x04\x04\x07\x02\x03\x12\x039\x02\"\n\r\n\x05\x04\x07\x02\x03\x04\
+    \x12\x049\x028\x13\n\x0c\n\x05\x04\x07\x02\x03\x06\x12\x039\x02\x13\n\
+    \x0c\n\x05\x04\x07\x02\x03\x01\x12\x039\x14\x1d\n\x0c\n\x05\x04\x07\x02\
+    \x03\x03\x12\x039\x20!\n\n\n\x02\x04\x08\x12\x04<\0>\x01\n\n\n\x03\x04\
+    \x08\x01\x12\x03<\x08\x18\n\x0b\n\x04\x04\x08\x02\0\x12\x03=\x02/\n\x0c\
+    \n\x05\x04\x08\x02\0\x04\x12\x03=\x02\n\n\x0c\n\x05\x04\x08\x02\0\x06\
+    \x12\x03=\x0b#\n\x0c\n\x05\x04\x08\x02\0\x01\x12\x03=$*\n\x0c\n\x05\x04\
+    \x08\x02\0\x03\x12\x03=-.\n\n\n\x02\x04\t\x12\x04@\0C\x01\n\n\n\x03\x04\
+    \t\x01\x12\x03@\x08\x1b\n\x0b\n\x04\x04\t\x02\0\x12\x03A\x02%\n\r\n\x05\
+    \x04\t\x02\0\x04\x12\x04A\x02@\x1d\n\x0c\n\x05\x04\t\x02\0\x06\x12\x03A\
+    \x02\x1a\n\x0c\n\x05\x04\t\x02\0\x01\x12\x03A\x1b\x20\n\x0c\n\x05\x04\t\
+    \x02\0\x03\x12\x03A#$\n\x0b\n\x04\x04\t\x02\x01\x12\x03B\x02\x12\n\r\n\
+    \x05\x04\t\x02\x01\x04\x12\x04B\x02A%\n\x0c\n\x05\x04\t\x02\x01\x05\x12\
+    \x03B\x02\x06\n\x0c\n\x05\x04\t\x02\x01\x01\x12\x03B\x07\r\n\x0c\n\x05\
+    \x04\t\x02\x01\x03\x12\x03B\x10\x11\n\n\n\x02\x04\n\x12\x04E\0G\x01\n\n\
+    \n\x03\x04\n\x01\x12\x03E\x08\x18\n\x0b\n\x04\x04\n\x02\0\x12\x03F\x02.\
+    \n\x0c\n\x05\x04\n\x02\0\x04\x12\x03F\x02\n\n\x0c\n\x05\x04\n\x02\0\x06\
+    \x12\x03F\x0b\x1e\n\x0c\n\x05\x04\n\x02\0\x01\x12\x03F\x1f)\n\x0c\n\x05\
+    \x04\n\x02\0\x03\x12\x03F,-b\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
